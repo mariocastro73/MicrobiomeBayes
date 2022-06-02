@@ -103,7 +103,7 @@ par(mfrow=c(1,1))
 with(simulacion,matplot(time, cbind(x1,x2,x3), type='l',lwd=1.5,lty=1:3, 
                         xlab = "time", ylab = "Populations",ylim=c(0,1.3*max(x3))))
 
-matplot(df[,1], df[,-1], type = "p",add=TRUE,pch=19,cex=.7) # Plot con ruido
+matplot(t[seq(1,61,by=4)],Xobs, type = "p",add=TRUE,pch=19,cex=.7) # Plot con ruido
 
 ntraj <- 1000
 rango <- seq(nsamples-ntraj,nsamples)
