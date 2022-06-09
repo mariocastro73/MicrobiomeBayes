@@ -37,8 +37,8 @@ df <- as.data.frame(cbind(simulacion$time,sapply(simulacion[,2:4],function(x) x+
 df[df<0] <- 0 # Quitamos los valores negativos
 colnames(df) <- colnames(simulacion)
 
-matplot(df[,1], df[,-1], type = "p",add=TRUE,pch=19,cex=.7) # Plot con ruido
-legend('topright',legend=c("x1","x2","x3"),col=1:3,lty=1:3,lwd=2,pch=19)
+matplot(df[,1], df[,-1], type = "p",add=TRUE,pch="+",cex=.7) # Plot con ruido
+legend('topleft',legend=c("x1","x2","x3"),col=1:3,lty=1:3,lwd=2,pch="+")
 # rm(.Random.seed)
 
 # Creamos modelo "msde"
@@ -52,6 +52,8 @@ LK3 <- sde.make.model(ModelFile = "3species.h", # La madre del cordero
 dT <- 1
 # Xobs <- as.matrix(df[,-1])
 Xobs <- as.matrix(df[seq(1,61,by=4),-1])
+matplot(t[seq(1,61,by=4)],Xobs, type = "p",add=TRUE,pch=0,cex=.7) # Plot con ruido
+
 init <- sde.init(model = LK3, x = Xobs, dt = dT,
                  # m=1,theta=rep(.1,13)) # No nos mojamos, todos los "priors" iguales
                  m=4,theta=rep(.1,13)) # No nos mojamos, todos los "priors" iguales
