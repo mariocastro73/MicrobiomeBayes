@@ -1,6 +1,6 @@
 library(deSolve)
 library(msde)
-setwd("D:/OneDrive/OneDrive - Telefonica/Sci/MicrobiomeBayes-main")
+setwd("~/GoogleDrive/SCI/MicrobiomeBayes-main")
 set.seed(555) # semilla
 # Modelo deSolve
 population <- function(time, state, parameters) {
@@ -14,11 +14,11 @@ population <- function(time, state, parameters) {
   })
 }
 
-init.cond <- c(x1=10,x2=10,x3=10) # Cond. inciales
-params <- c(r1 = 0.5, r2 = 0.19, r3 = 0.9, 
-            b11=-0.4, b22=-0.05, b33=-0.02, 
-            b12= 0.00489, b21 = 0, b13 = 0.0049,
-            b31 = 0.0025, b23 = 0.0057, b32 = 0.0025) # Parametros
+init.cond <- c(x1=10,x2=14,x3=4) # Cond. inciales
+params <- c(r1 = 6/28, r2 = 4/28, r3 = 2/28, 
+            b11=-0.05, b22=-0.026, b33=-0.0148, 
+            b12= 0.15, b21 = -0.01, b13 = -0.2,
+            b31 = 0.10, b23 = 0.05, b32 = -0.10) # Parametros
 
 tmax=20 # tiempo de simulación
 t <- seq(0,tmax,by=.25) 
@@ -30,7 +30,7 @@ simulacion <- data.frame(ode(y = init.cond, times = t, func = population, parms 
 par(mfrow=c(1,1))
 
 with(simulacion,matplot(time, cbind(x1,x2,x3), type='l',lwd=1.5,lty=1:3, 
-                        xlab = "time", ylab = "Populations",ylim=c(0,1.3*max(x3))))
+                        xlab = "time", ylab = "Populations",ylim=c(0,2*max(x3))))
 
 # Añadimos ruido (gaussiano blanco)
 sigma <- 1
@@ -59,8 +59,8 @@ init <- sde.init(model = LK3, x = Xobs, dt = dT,
                  m=4,theta=rep(.1,13)) # No nos mojamos, todos los "priors" iguales
 
 # Ajuste bayesiano (usando msde)
-nsamples <- 2e4
-burn <- 2e3
+nsamples <- 2e6
+burn <- 2e5
 
 
 LK3.posterior <- sde.post(model = LK3, init = init,
@@ -87,8 +87,7 @@ colq <- function(X,q) apply(X, 2, function(X) as.numeric(quantile(X,q))) # Funci
 informa<-as.data.frame(cbind(intervalo=dT,nsample=nsamples,burn=burn,real=c(theta0,sigma=sigma),median=colq(LK3.posterior$params,.5),
                              lowq=colq(LK3.posterior$params,.025),hiq=colq(LK3.posterior$params,.975)))
 # Guarda datos
-
-write.table(informa, file = 'simulaciones.csv', append = TRUE)
+# write.table(informa, file = 'simulaciones.csv', append = TRUE)
 
 
 
@@ -108,11 +107,34 @@ with(compara[k,],{
      lines(real,lowq);
      lines(real,hiq)}
 )
+# Representaciones mapa calor
+# library('dplyr')
+df<-sample_n(as.data.frame(LK3.posterior$params),100) #son muchos datos, cogemos aleatoriamente unos cuantos
+ggpairs(df,mapping=aes(alpha=0.001))
+
+library(GGally)
+library(tidyverse)
+library(viridis)
+
+densidad <- function(data, mapping, ...){
+  # Using default ggplot density function
+  
+  p <- ggplot(data = data, mapping = mapping) + 
+    stat_density2d(aes(fill=..density..), geom="tile", contour = FALSE) +
+    scale_fill_gradientn(colours=viridis::viridis(100, option="viridis"))
+  p
+}
+
+
+ggpairs(df, title=paste("Remien, s_samples=",nsamples), lower=list(continuous=densidad),upper = list(continuous = wrap("cor", size = 2.5))) +
+  theme_void()
+
+
 
 # Pintamos unas cuantas trayectorias
 par(mfrow=c(1,1))
 with(simulacion,matplot(time, cbind(x1,x2,x3), type='l',lwd=1.5,lty=1:3, 
-                        xlab = "time", ylab = "Populations",ylim=c(0,1.3*max(x3))))
+                        xlab = "time", ylab = "Populations",ylim=c(0,2*max(x3))))
 
 matplot(t[seq(1,61,by=4)],Xobs, type = "p",add=TRUE,pch=19,cex=.7) # Plot con ruido
 
