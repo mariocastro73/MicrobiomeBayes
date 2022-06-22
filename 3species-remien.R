@@ -112,3 +112,7 @@ for(i in rango) {
     
 }
 
+dfplot<-sample_n(as.data.frame(LK3.posterior$params),500) #son muchos datos, cogemos aleatoriamente unos cuantos
+ggpairs(dfplot, title=paste("Remien, s_samples=",nsamples), lower=list(continuous=densidad),upper = list(continuous = wrap("cor", size = 2.5))) +
+  theme_void()
+
