@@ -1,0 +1,20 @@
+---
+title: "Principal Component Analysis"
+author: "Dataset aux"
+output:
+  html_document: default
+---
+This dataset contains 10000 individuals and 13 variables.
+
+- - -
+
+```{r, echo = FALSE}
+library(FactoMineR)
+load('/home/marioc/Dropbox/research/bio/bacteria/galeano/MicrobiomeBayes/Workspace.RData')
+```
+### 1. Study of the outliers
+The analysis of the graphs does not detect any outlier.
+
+- - -
+
+### 2. Inertia distribution

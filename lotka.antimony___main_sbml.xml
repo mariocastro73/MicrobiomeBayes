@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by libAntimony version v2.7.0 on 2023-02-17 08:32 with libSBML version 5.11.4. -->
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
+  <model id="__main" name="__main">
+    <listOfCompartments>
+      <compartment sboTerm="SBO:0000410" id="default_compartment" spatialDimensions="3" size="1" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="x1" compartment="default_compartment" initialConcentration="10" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="x2" compartment="default_compartment" initialConcentration="10" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="x3" compartment="default_compartment" initialConcentration="10" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="theta1" value="0.5" constant="true"/>
+      <parameter id="theta4" value="-0.02" constant="true"/>
+      <parameter id="theta7" value="0.0089" constant="true"/>
+      <parameter id="theta10" value="0.0049" constant="true"/>
+      <parameter id="theta2" value="0.19" constant="true"/>
+      <parameter id="theta5" value="0" constant="true"/>
+      <parameter id="theta8" value="-0.15" constant="true"/>
+      <parameter id="theta11" value="0.0057" constant="true"/>
+      <parameter id="theta3" value="0.9" constant="true"/>
+      <parameter id="theta6" value="0.0015" constant="true"/>
+      <parameter id="theta9" value="0.025" constant="true"/>
+      <parameter id="theta12" value="-0.02" constant="true"/>
+    </listOfParameters>
+    <listOfReactions>
+      <reaction id="_J0" reversible="true" fast="false">
+        <listOfProducts>
+          <speciesReference species="x1" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="x2"/>
+          <modifierSpeciesReference species="x3"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> x1 </ci>
+              <apply>
+                <plus/>
+                <ci> theta1 </ci>
+                <apply>
+                  <times/>
+                  <ci> theta4 </ci>
+                  <ci> x1 </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> theta7 </ci>
+                  <ci> x2 </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> theta10 </ci>
+                  <ci> x3 </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J1" reversible="true" fast="false">
+        <listOfProducts>
+          <speciesReference species="x2" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="x1"/>
+          <modifierSpeciesReference species="x3"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> x2 </ci>
+              <apply>
+                <plus/>
+                <ci> theta2 </ci>
+                <apply>
+                  <times/>
+                  <ci> theta5 </ci>
+                  <ci> x1 </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> theta8 </ci>
+                  <ci> x2 </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> theta11 </ci>
+                  <ci> x3 </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="_J2" reversible="true" fast="false">
+        <listOfProducts>
+          <speciesReference species="x3" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <listOfModifiers>
+          <modifierSpeciesReference species="x1"/>
+          <modifierSpeciesReference species="x2"/>
+        </listOfModifiers>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> x3 </ci>
+              <apply>
+                <plus/>
+                <ci> theta3 </ci>
+                <apply>
+                  <times/>
+                  <ci> theta6 </ci>
+                  <ci> x1 </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> theta9 </ci>
+                  <ci> x2 </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> theta12 </ci>
+                  <ci> x3 </ci>
+                </apply>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

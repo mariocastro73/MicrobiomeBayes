@@ -1,0 +1,22 @@
+species x1,x2,x3;
+
+x1=10;
+x2=10;
+x3=10;
+
+->x1;x1*(theta1+theta4*x1+theta7*x2+theta10*x3);
+->x2;x2*(theta2+theta5*x1+theta8*x2+theta11*x3);
+->x3;x3*(theta3+theta6*x1+theta9*x2+theta12*x3);
+
+theta1 = 0.5;
+theta2 = 0.19
+theta3 = 0.9;
+theta4= -0.02;
+theta5 = 0;
+theta6 = 0.0015;
+theta7= 0.0089;
+theta8 =-0.15;
+theta9 = 0.025;
+theta10 = 0.0049;
+theta11 = 0.0057;
+theta12= -0.02;
