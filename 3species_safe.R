@@ -7,19 +7,19 @@ set.seed(14) # semilla
 population <- function(time, state, parameters) {
   par <- as.list(c(state, parameters))
   with(par, {
-    dx1 <- x1*(theta1+theta4*x1+theta7*x2+theta10*x3)
-    dx2 <- x2*(theta2+theta5*x1+theta8*x2+theta11*x3)
-    dx3 <- x3*(theta3+theta6*x1+theta9*x2+theta12*x3)
+    dx1 <- x1*(r1+b11*x1+b12*x2+b13*x3)
+    dx2 <- x2*(r2+b21*x1+b22*x2+b23*x3)
+    dx3 <- x3*(r3+b31*x1+b32*x2+b33*x3)
     
     list(c(dx1,dx2,dx3))
   })
 }
 
 init.cond <- c(x1=10,x2=50,x3=10) # Cond. inciales
-params <- c(theta1 = 0.5,     theta2 = 0.019,    theta3 = 0.9, 
-            theta4= -0.02,      theta5 = 0,       theta6 = 0.0015, 
-            theta7= 0.0089,  theta8=-0.05,     theta9 = 0.025,
-            theta10 = 0.0049, theta11 = 0.0057, theta12= -0.02) # Parametros
+params <- c(r1 = 0.5,     r2 = 0.019,    r3 = 0.9, 
+            b11= -0.02,      b21 = 0.001,       b31 = 0.0015, 
+            b12= 0.0089,  b22=-0.05,     b32 = 0.025,
+            b13 = 0.0049, b23 = 0.0057, b33= -0.02) # Parametros
 
 tmax=15 # tiempo de simulación
 dt <- 0.25
@@ -58,7 +58,7 @@ init <- sde.init(model = LK3, x = Xobs, dt = dT,
                  m=m,theta=rep(.1,13)) # No nos mojamos, todos los "priors" iguales
 
 # Ajuste bayesiano (usando msde)
-nsamples <- 2e5
+nsamples <- 5e5
 burn <- 2e3
 
 LK3.posterior <- sde.post(model = LK3, init = init,
@@ -69,6 +69,11 @@ tnames <- expression(theta[1], theta[2], theta[3],
                      theta[7], theta[8], theta[9],
                      theta[10], theta[11], theta[12],
                      sigma)
+tnames <- expression(r[1] ,r[2] ,r[3],
+                      b[11],b[21],b[31], 
+                      b[12],b[22],b[32],
+                      b[13],b[23],b[33],
+                      sigma)
 theta0 <- params
 
 # x11()

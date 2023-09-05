@@ -52,7 +52,7 @@ model {
   }
 }'
 
-mod <- stan_model(model_code = stancode) #, verbose = TRUE)
+mod <- stan_model(model_code = stancode, verbose = TRUE)
 fit <- sampling(mod, data = list(y=Xobs,N=N))
 # fit <- sampling(mod, data = list(y=y,N=N))
 
