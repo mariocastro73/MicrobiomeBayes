@@ -1,0 +1,15 @@
+# Fdb version 4
+["pdflatex"] 1693986976 "table.tex" "table.pdf" "table" 1693986976 0
+  "/usr/share/texmf-dist/tex/latex/base/article.cls" 1689853683 20144 d5ecf0a5140c8d8d8b72cbe86e320eff ""
+  "/usr/share/texmf-dist/tex/latex/base/size10.clo" 1689853683 8448 c33a4e1cb35cee9b33c2b21033b73e39 ""
+  "/usr/share/texmf-dist/tex/latex/base/ts1cmr.fd" 1689853683 2430 8418b3f1835e588625becbcac4dbce56 ""
+  "/usr/share/texmf-dist/tex/latex/l3backend/l3backend-xetex.def" 1689853683 32346 879686206fa618f4f5073ad4bd48feda ""
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1689853683 40684 9b9ec0b4288972636ff6a3b9c4238efc ""
+  "/var/lib/texmf/web2c/xetex/xelatex.fmt" 1686210761 11046057 21f6501b276fda5ec82d2cb3937050ba ""
+  "table.aux" 1693986976 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "table.tex" 1693986976 808 21c75ff0ab7b2960062bb0997c86b2c9 ""
+  (generated)
+  "table.aux"
+  "table.log"
+  "table.pdf"
+  (rewritten before read)

@@ -75,31 +75,39 @@ tnames <- expression(r[1] ,r[2] ,r[3],
                       sigma)
 theta0 <- c(params,sigma=sigma)
 
-# x11()
+x11("",18,10)
 par(mfrow=c(3,5))
+par(mar=c(5.5,5.5,3,5.5))
 col <- "#ffa50088"
+cex.size <- 2
 for(ii in 1:LK3$nparams) {
-  hist(LK3.posterior$params[,ii],  freq = FALSE,border=col,col=col, #breaks = 25,
+  hist(LK3.posterior$params[,ii],  freq = FALSE,border=col,col=col,cex.main=cex.size,cex=cex.size,cex.lab=cex.size, cex.axis=cex.size,#breaks = 25,
        xlab = tnames[ii],xlim=c(min(theta0[ii],0,LK3.posterior$params[,ii]),max(theta0[ii],0,LK3.posterior$params[,ii])),
-       main = parse(text = paste0("p[1](", tnames[ii], "*\" | \"*bold(Data))")))
+       main = parse(text = paste0("p(", tnames[ii], "*\" | \"*bold(Data))")))
   # superimpose true parameter value
   abline(v = theta0[ii], lwd = 2, lty = 2,col=1)
   abline(v = 0, lwd = 2, lty = 3,col='red')
 }
+dev.copy2pdf(file="posteriors.pdf")
 
 colq <- function(X,q) apply(X, 2, function(X) as.numeric(quantile(X,q))) # Función auxiliar (quantiles)
 compara <- as.data.frame(cbind(real=theta0,median=colq(LK3.posterior$params,.5),
                                lowq=colq(LK3.posterior$params,.025),hiq=colq(LK3.posterior$params,.975)))
 print(compara)
 # for(i in 1:12) cat(tnames[i],params[i],":",length(which(LK3.posterior$params[,i]*sign(params[i])<0))/length(LK3.posterior$params[,i])*100,"\n")
-for(i in 1:12)cat(sprintf("%s=%+.4f\tProbability of having wrong sign = %.1f%%\n",tnames[i],params[i],length(which(LK3.posterior$params[,i]*sign(params[i])<0))/length(LK3.posterior$params[,i])*100))
+
+for(i in 1:12) cat(sprintf("%s & %+.4f & %+.4f& %.1f%% & %.1f%%\\\\\n",tnames[i],params[i],median(LK3.posterior$params[,i]),
+                           (params[i]-median(LK3.posterior$params[,i]))/params[i]*100,length(which(LK3.posterior$params[,i]*sign(params[i])<0))/length(LK3.posterior$params[,i])*100))
+
 
 # Pintamos unas cuantas trayectorias
+x11("",8,6)
 par(mfrow=c(1,1))
-with(simulacion,matplot(time, cbind(x1,x2,x3), type='n',pch=19,cex=.5,lty=1:3, 
+par(mar=c(5,5,3,5))
+with(simulacion,matplot(time, cbind(x1,x2,x3), type='n',lty=1:3,cex=1.4,cex.lab=1.5,cex.axis=1.5, 
                         xlab = "time", ylab = "Populations",ylim=c(0,1.3*max(x3))))
 
-matplot(t[seq(1,length(t),by=m)],Xobs, type = "p",add=TRUE,pch=19,cex=1.4,lwd=0) # Plot con ruido
+matplot(t[seq(1,length(t),by=m)],Xobs, type = "p",add=TRUE,pch=19,lwd=0) # Plot con ruido
 
 ntraj <- 500
 rango <- seq(nsamples-ntraj,nsamples)
@@ -109,5 +117,5 @@ for(i in rango) {
   with(traj,matplot(time, cbind(x1,x2,x3), type='l',lwd=.1,lty=3,add=TRUE))
   
 }
-
+dev.copy2pdf(file='trajectories.pdf')
 
