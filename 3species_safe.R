@@ -16,7 +16,7 @@ population <- function(time, state, parameters) {
 
 init.cond <- c(x1=10,x2=50,x3=10) # Cond. inciales
 params <- c(r1 = 0.5,     r2 = 0.019,    r3 = 0.9, 
-            b11= -0.02,      b21 = 0.001,       b31 = 0.0015, 
+            b11= -0.02,      b21 = -0.001,       b31 = 0.0015, 
             b12= 0.0089,  b22=-0.05,     b32 = 0.025,
             b13 = 0.0049, b23 = 0.0057, b33= -0.02) # Parametros
 
@@ -63,11 +63,11 @@ burn <- 2e3
 LK3.posterior <- sde.post(model = LK3, init = init,
                           hyper = NULL, #prior plano
                           nsamples = nsamples, burn = burn)
-tnames <- expression(theta[1], theta[2], theta[3], 
-                     theta[4], theta[5], theta[6],
-                     theta[7], theta[8], theta[9],
-                     theta[10], theta[11], theta[12],
-                     sigma)
+# tnames <- expression(theta[1], theta[2], theta[3], 
+#                      theta[4], theta[5], theta[6],
+#                      theta[7], theta[8], theta[9],
+#                      theta[10], theta[11], theta[12],
+#                      sigma)
 tnames <- expression(r[1] ,r[2] ,r[3],
                       b[11],b[21],b[31], 
                       b[12],b[22],b[32],
@@ -91,7 +91,8 @@ colq <- function(X,q) apply(X, 2, function(X) as.numeric(quantile(X,q))) # Funci
 compara <- as.data.frame(cbind(real=theta0,median=colq(LK3.posterior$params,.5),
                                lowq=colq(LK3.posterior$params,.025),hiq=colq(LK3.posterior$params,.975)))
 print(compara)
-for(i in 1:12) cat(params[i],":",length(which(LK3.posterior$params[,i]*sign(params[i])<0))/length(LK3.posterior$params[,i])*100,"\n")
+# for(i in 1:12) cat(tnames[i],params[i],":",length(which(LK3.posterior$params[,i]*sign(params[i])<0))/length(LK3.posterior$params[,i])*100,"\n")
+for(i in 1:12)cat(sprintf("%s=%+.4f\tProbability of having wrong sign = %.1f%%\n",tnames[i],params[i],length(which(LK3.posterior$params[,i]*sign(params[i])<0))/length(LK3.posterior$params[,i])*100))
 
 # Pintamos unas cuantas trayectorias
 par(mfrow=c(1,1))
