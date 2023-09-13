@@ -30,6 +30,7 @@ mnt <- ulam(
   ), data=list(y=yobs) , chains=4 , iter=2000)
 
 # plot
+x11("",16,9)
 par(mfrow=c(2,2),cex=1.05)
 ymax <- 0.53
 xlwd <- 1.5
@@ -37,7 +38,7 @@ postcol <- 2
 xadj <- 0.8
 
 p <- extract.samples(mnn)
-dens(p$mu, xlim=c(-5,15), ylim=c(0,ymax), lwd=xlwd+1 , col=postcol, xlab="" ,adj=xadj )
+dens(p$mu, xlim=c(-5,15), ylim=c(0,ymax), lwd=xlwd+1 , col=postcol, xlab="", ylab="Posterior" ,adj=xadj, main="prior: n Likelihood: n" )
 #mtext("normal prior, normal likelihood")
 curve( dnorm(yobs,x,1) , add=TRUE , lty=1 , lwd=xlwd ) # lik
 curve( dnorm(x,10,1) , add=TRUE , lty=2 , lwd=xlwd ) # prior
@@ -46,7 +47,7 @@ text(0,0.42,"likelihood")
 text(10,0.42,"prior")
 
 p <- extract.samples(mtt)
-dens(p$mu , xlim=c(-5,15) , ylim=c(0,ymax) , lwd=xlwd+1 , col=postcol , xlab="" ,adj=xadj )
+dens(p$mu , xlim=c(-5,15) , ylim=c(0,ymax) , lwd=xlwd+1 , col=postcol , xlab="", ylab="Posterior" ,adj=xadj, main="prior: t Likelihood: t"  )
 #mtext("t prior, t likelihood")
 curve( dstudent(yobs,2,x,1) , add=TRUE , lty=1 , lwd=xlwd ) # lik
 curve( dstudent(x,2,10,1) , add=TRUE , lty=2 , lwd=xlwd ) # prior
@@ -55,7 +56,7 @@ text(0,0.42,"likelihood")
 text(10,0.42,"prior")
 
 p <- extract.samples(mnt)
-dens(p$mu, xlim=c(-5,15), ylim=c(0,ymax), lwd=xlwd+1 , col=postcol, xlab="" ,adj=xadj )
+dens(p$mu, xlim=c(-5,15), ylim=c(0,ymax), lwd=xlwd+1 , col=postcol, xlab="", ylab="Posterior" ,adj=xadj, main="prior: t Likelihood: n"  )
 #mtext("t prior, normal likelihood")
 curve( dnorm(yobs,x,1) , add=TRUE , lty=1 , lwd=xlwd) # lik
 curve( dstudent(x,2,10,1) , add=TRUE , lty=2 , lwd=xlwd) # prior
@@ -64,7 +65,7 @@ text(0,0.42,"likelihood")
 text(10,0.42,"prior")
 
 p <- extract.samples(mtn)
-dens(p$mu, xlim=c(-5,15), ylim=c(0,ymax), lwd=xlwd+1 , col=postcol, xlab="" ,adj=xadj )
+dens(p$mu, xlim=c(-5,15), ylim=c(0,ymax), lwd=xlwd+1 , col=postcol, xlab="", ylab="Posterior" ,adj=xadj, main="prior: n Likelihood: t"  )
 #mtext("normal prior, t likelihood")
 curve( dstudent(yobs,2,x,1) , add=TRUE , lty=1 , lwd=xlwd) # lik
 curve( dnorm(x,10,1) , add=TRUE , lty=2 , lwd=xlwd) # prior
