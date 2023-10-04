@@ -117,5 +117,5 @@ for(i in rango) {
   with(traj,matplot(time, cbind(x1,x2,x3), type='l',lwd=.1,lty=3,add=TRUE))
   
 }
-dev.copy2pdf(file='trajectories.pdf')
+dev.copy2pdf(file='trajectories_thick.pdf')
 
