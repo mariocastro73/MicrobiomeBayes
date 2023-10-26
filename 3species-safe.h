@@ -37,10 +37,10 @@ inline void sdeModel::sdeDf(double *df, double *x, double *theta) {
 
 // parameter validator
 inline bool sdeModel::isValidParams(double *theta) {
-  bool val = theta[12] > 0.0;
-  //bool val = theta[0] > 0.0;
-  //val = val && theta[1] > 0.0;
-  //val = val && theta[2] > 0.0;
+  //bool val = theta[12] > 0.0;
+  bool val = theta[0] > 0.0;
+  val = val && theta[1] > 0.0;
+  val = val && theta[2] > 0.0;
   return val;
 }
 

@@ -88,7 +88,7 @@ for(ii in 1:LK3$nparams) {
   abline(v = theta0[ii], lwd = 2, lty = 2,col=1)
   abline(v = 0, lwd = 2, lty = 3,col='red')
 }
-dev.copy2pdf(file="posteriors.pdf")
+dev.copy2pdf(file="posteriors-safe.pdf")
 
 colq <- function(X,q) apply(X, 2, function(X) as.numeric(quantile(X,q))) # Función auxiliar (quantiles)
 compara <- as.data.frame(cbind(real=theta0,median=colq(LK3.posterior$params,.5),
@@ -117,5 +117,5 @@ for(i in rango) {
   with(traj,matplot(time, cbind(x1,x2,x3), type='l',lwd=.1,lty=3,add=TRUE))
   
 }
-dev.copy2pdf(file='trajectories_thick.pdf')
+dev.copy2pdf(file='trajectories_thick_safe.pdf')
 
